@@ -473,13 +473,13 @@ boardRect.top;
 
 
 
-const distance=
+const distance = Math.sqrt(
 
-Math.sqrt(
+Math.pow(x2-x1,2)
 
-(x2-x1)**2+
++
 
-(y2-y1)**2
+Math.pow(y2-y1,2)
 
 );
 
