@@ -84,6 +84,7 @@ const winningConditions = [
 
 
 
+
 function handleCellClick(){
 
 
@@ -115,8 +116,6 @@ function handleCellClick(){
 
 
     checkWinner();
-
-
 
 }
 
@@ -164,8 +163,6 @@ function checkWinner(){
 
 
 
-    // WIN CONDITION
-
     if(win){
 
 
@@ -207,7 +204,6 @@ function checkWinner(){
         gameActive = false;
 
 
-
         return;
 
 
@@ -217,7 +213,7 @@ function checkWinner(){
 
 
 
-    // DRAW CONDITION
+
 
     if(!gameState.includes("")){
 
@@ -246,7 +242,6 @@ function checkWinner(){
         gameActive = false;
 
 
-
         return;
 
 
@@ -257,10 +252,6 @@ function checkWinner(){
 
 
 
-
-    // CHANGE PLAYER
-
-
     currentPlayer =
     currentPlayer === "X" ? "O" : "X";
 
@@ -268,8 +259,6 @@ function checkWinner(){
 
     statusText.textContent =
     `Player ${currentPlayer}'s Turn`;
-
-
 
 }
 
@@ -281,165 +270,111 @@ function checkWinner(){
 
 
 
-// FIXED WINNING LINE FUNCTION
+// NEW FIXED WINNING LINE SYSTEM
 
 function showLine(win){
 
 
-    winningLine.style.width = "300px";
+    const board = document.querySelector(".board");
 
-    winningLine.style.height = "8px";
 
-    winningLine.style.left = "0px";
+    const firstCell = cells[win[0]];
 
-    winningLine.style.top = "0px";
+    const lastCell = cells[win[2]];
 
-    winningLine.style.transform = "rotate(0deg)";
 
 
+    const boardRect = board.getBoundingClientRect();
 
-    let combination = win.toString();
 
+    const firstRect = firstCell.getBoundingClientRect();
 
+    const lastRect = lastCell.getBoundingClientRect();
 
 
 
-    // Horizontal rows
 
+    const x1 =
+    firstRect.left +
+    firstRect.width / 2 -
+    boardRect.left;
 
-    if(combination === "0,1,2"){
 
 
-        winningLine.style.top = "45px";
+    const y1 =
+    firstRect.top +
+    firstRect.height / 2 -
+    boardRect.top;
 
 
-    }
 
 
+    const x2 =
+    lastRect.left +
+    lastRect.width / 2 -
+    boardRect.left;
 
-    else if(combination === "3,4,5"){
 
 
-        winningLine.style.top = "156px";
+    const y2 =
+    lastRect.top +
+    lastRect.height / 2 -
+    boardRect.top;
 
 
-    }
 
 
 
-    else if(combination === "6,7,8"){
+    const length =
+    Math.sqrt(
 
+        Math.pow(x2-x1,2) +
+        Math.pow(y2-y1,2)
 
-        winningLine.style.top = "268px";
+    );
 
 
-    }
 
 
 
+    const angle =
+    Math.atan2(
 
+        y2-y1,
 
+        x2-x1
 
-    // Vertical columns
+    )
+    *
+    (180 / Math.PI);
 
 
-    else if(combination === "0,3,6"){
 
 
-        winningLine.style.left = "45px";
 
-        winningLine.style.top = "156px";
 
-        winningLine.style.transform =
-        "rotate(90deg)";
+    winningLine.style.width =
+    `${length}px`;
 
 
-    }
 
+    winningLine.style.left =
+    `${x1}px`;
 
 
-    else if(combination === "1,4,7"){
 
+    winningLine.style.top =
+    `${y1}px`;
 
-        winningLine.style.left = "156px";
 
-        winningLine.style.top = "156px";
 
-        winningLine.style.transform =
-        "rotate(90deg)";
+    winningLine.style.transformOrigin =
+    "0 50%";
 
 
-    }
 
-
-
-    else if(combination === "2,5,8"){
-
-
-        winningLine.style.left = "268px";
-
-        winningLine.style.top = "156px";
-
-        winningLine.style.transform =
-        "rotate(90deg)";
-
-
-    }
-
-
-
-
-
-
-
-    // Diagonal top-left to bottom-right
-
-
-    else if(combination === "0,4,8"){
-
-
-        winningLine.style.width = "420px";
-
-
-        winningLine.style.left = "-60px";
-
-
-        winningLine.style.top = "156px";
-
-
-        winningLine.style.transform =
-        "rotate(45deg)";
-
-
-    }
-
-
-
-
-
-
-
-    // Diagonal top-right to bottom-left
-
-
-    else if(combination === "2,4,6"){
-
-
-        winningLine.style.width = "420px";
-
-
-        winningLine.style.left = "-60px";
-
-
-        winningLine.style.top = "156px";
-
-
-        winningLine.style.transform =
-        "rotate(-45deg)";
-
-
-    }
-
+    winningLine.style.transform =
+    `rotate(${angle}deg)`;
 
 
 }
@@ -517,17 +452,11 @@ function restartGame(){
 
 
 
-    // Reset winning line
 
+    winningLine.style.width = "0px";
 
-    winningLine.style.width = "0";
-
-    winningLine.style.transform = "rotate(0deg)";
-
-    winningLine.style.left = "0px";
-
-    winningLine.style.top = "0px";
-
+    winningLine.style.transform =
+    "rotate(0deg)";
 
 
 }
@@ -550,6 +479,7 @@ cells.forEach(cell=>{
 
 
 });
+
 
 
 
