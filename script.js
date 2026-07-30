@@ -96,31 +96,15 @@ const winningConditions = [
 
 function playSound(sound){
 
-
 if(sound){
 
+sound.volume = 1;
 
-sound.volume = 0.5;
-
-
-sound.currentTime = 0;
-
-
-
-sound.play()
-
-.catch(error=>{
-
-console.log("Audio blocked:",error);
-
-});
-
+sound.play();
 
 }
 
-
 }
-
 
 
 
