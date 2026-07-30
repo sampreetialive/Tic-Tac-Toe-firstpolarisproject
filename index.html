@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Neon Tic-Tac-Toe</title>
+<title>Neon Tic Tac Toe</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -20,41 +20,33 @@
 <div class="background-glow"></div>
 
 
-<div class="container">
+<main class="container">
 
+
+<header>
 
 <h1>
 TIC TAC TOE
 </h1>
 
-
-
-<div id="status">
+<p id="status">
 Player X's Turn
-</div>
+</p>
+
+</header>
 
 
 
 
 
-<div class="scoreboard">
-
-
-<div class="score-card">
-
-<h3>X</h3>
-
-<p id="x-score">0</p>
-
-</div>
-
+<section class="scoreboard">
 
 
 <div class="score-card">
 
-<h3>DRAW</h3>
+<span>X</span>
 
-<p id="draw-score">0</p>
+<strong id="x-score">0</strong>
 
 </div>
 
@@ -62,23 +54,32 @@ Player X's Turn
 
 <div class="score-card">
 
-<h3>O</h3>
+<span>DRAW</span>
 
-<p id="o-score">0</p>
-
-</div>
-
-
+<strong id="draw-score">0</strong>
 
 </div>
 
 
 
+<div class="score-card">
+
+<span>O</span>
+
+<strong id="o-score">0</strong>
+
+</div>
+
+
+</section>
 
 
 
 
-<div class="board">
+
+
+
+<section class="board">
 
 
 <div class="cell" data-index="0"></div>
@@ -105,12 +106,10 @@ Player X's Turn
 
 
 
-
 <div class="winning-line"></div>
 
 
-
-</div>
+</section>
 
 
 
@@ -120,13 +119,13 @@ Player X's Turn
 
 <button id="restart">
 
-↻ NEW GAME
+NEW GAME
 
 </button>
 
 
 
-</div>
+</main>
 
 
 
@@ -135,7 +134,11 @@ Player X's Turn
 
 
 
-<audio id="clickSound">
+
+<!-- AUDIO -->
+
+
+<audio id="clickSound" preload="auto">
 
 <source src="neon-click.mp3" type="audio/mpeg">
 
@@ -143,7 +146,8 @@ Player X's Turn
 
 
 
-<audio id="winSound">
+
+<audio id="winSound" preload="auto">
 
 <source src="victory.mp3" type="audio/mpeg">
 
@@ -151,11 +155,16 @@ Player X's Turn
 
 
 
-<audio id="drawSound">
+
+<audio id="drawSound" preload="auto">
 
 <source src="draw-effect.mp3" type="audio/mpeg">
 
 </audio>
+
+
+
+
 
 
 
