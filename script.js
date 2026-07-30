@@ -22,29 +22,32 @@ let gameActive = true;
 
 
 let gameState = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+
+"",
+"",
+"",
+
+"",
+"",
+"",
+
+"",
+"",
+""
+
 ];
 
 
 
 let scores = {
 
-    X:0,
+X:0,
 
-    O:0,
+O:0,
 
-    draw:0
+draw:0
 
 };
-
 
 
 
@@ -58,48 +61,26 @@ const drawScore = document.getElementById("draw-score");
 
 
 
-
-
 const winningConditions = [
 
-    [0,1,2],
+[0,1,2],
 
-    [3,4,5],
+[3,4,5],
 
-    [6,7,8],
+[6,7,8],
 
-    [0,3,6],
+[0,3,6],
 
-    [1,4,7],
+[1,4,7],
 
-    [2,5,8],
+[2,5,8],
 
-    [0,4,8],
+[0,4,8],
 
-    [2,4,6]
+[2,4,6]
 
 ];
 
-
-
-
-
-
-
-
-function playSound(sound){
-
-
-    if(sound){
-
-        sound.currentTime = 0;
-
-        sound.play().catch(()=>{});
-
-    }
-
-
-}
 
 
 
@@ -111,47 +92,55 @@ function playSound(sound){
 function handleCellClick(){
 
 
-    let index = this.dataset.index;
+
+let index = this.dataset.index;
 
 
 
-    if(gameState[index] !== "" || !gameActive){
+if(gameState[index] !== "" || !gameActive){
 
-        return;
+return;
 
-    }
-
-
-
-    gameState[index] = currentPlayer;
+}
 
 
 
-    this.textContent = currentPlayer;
+gameState[index] = currentPlayer;
+
+
+
+this.textContent = currentPlayer;
+
+
+
+// Neon X/O styling
+
+if(currentPlayer === "X"){
+
+this.classList.add("x");
+
+}
+
+else{
+
+this.classList.add("o");
+
+}
 
 
 
 
-    if(currentPlayer === "X"){
+if(clickSound){
 
-        this.classList.add("x");
+clickSound.currentTime = 0;
 
-    }
+clickSound.play();
 
-    else{
-
-        this.classList.add("o");
-
-    }
+}
 
 
 
-
-    playSound(clickSound);
-
-
-
-    checkWinner();
+checkWinner();
 
 
 
@@ -168,168 +157,151 @@ function handleCellClick(){
 function checkWinner(){
 
 
-    let win = null;
 
+let win = null;
 
 
-    for(let condition of winningConditions){
 
+for(let condition of winningConditions){
 
-        let [a,b,c] = condition;
 
 
+let [a,b,c] = condition;
 
-        if(
 
-            gameState[a] &&
 
-            gameState[a] === gameState[b] &&
+if(
 
-            gameState[a] === gameState[c]
+gameState[a] &&
 
-        ){
+gameState[a] === gameState[b] &&
 
-            win = condition;
+gameState[a] === gameState[c]
 
-            break;
+){
 
-        }
+win = condition;
 
+break;
 
-    }
+}
 
 
+}
 
 
 
 
 
-    if(win){
+if(win){
 
 
 
-        statusText.textContent =
+statusText.textContent =
+`Player ${currentPlayer} Wins 🎉`;
 
-        `Player ${currentPlayer} Wins 🎉`;
 
 
+scores[currentPlayer]++;
 
-        statusText.classList.remove("draw");
 
-        statusText.classList.add("win");
 
+updateScore();
 
 
-        scores[currentPlayer]++;
 
+showLine(win);
 
 
-        updateScore();
 
+if(winSound){
 
+winSound.play();
 
-        showLine(win);
+}
 
 
 
-        playSound(winSound);
+confetti({
 
+particleCount:250,
 
+spread:120,
 
+origin:{
+y:.6
+}
 
-        confetti({
+});
 
-            particleCount:250,
 
-            spread:120
 
-        });
+gameActive=false;
 
 
+return;
 
-        gameActive=false;
+}
 
 
 
-        return;
 
 
+if(!gameState.includes("")){
 
-    }
 
 
+statusText.textContent =
+"It's a Draw!";
 
 
 
+scores.draw++;
 
 
 
+updateScore();
 
 
-    if(!gameState.includes("")){
 
+if(drawSound){
 
+drawSound.play();
 
-        statusText.textContent =
+}
 
-        "It's a Draw!";
 
 
+gameActive=false;
 
-        statusText.classList.remove("win");
 
-        statusText.classList.add("draw");
 
+return;
 
 
-        scores.draw++;
+}
 
 
 
-        updateScore();
 
 
+currentPlayer =
 
-        playSound(drawSound);
+currentPlayer === "X"
 
+?
 
+"O"
 
-        gameActive=false;
+:
 
+"X";
 
 
-        return;
 
+statusText.textContent =
 
-    }
-
-
-
-
-
-
-
-
-
-    currentPlayer =
-
-    currentPlayer === "X"
-
-    ?
-
-    "O"
-
-    :
-
-    "X";
-
-
-
-
-
-    statusText.textContent =
-
-    `Player ${currentPlayer}'s Turn`;
+`Player ${currentPlayer}'s Turn`;
 
 
 
@@ -343,143 +315,143 @@ function checkWinner(){
 
 
 
+
+// FIXED WINNING LINE CALCULATION
+
 function showLine(win){
 
 
 
-    const board = document.querySelector(".board");
+const board = document.querySelector(".board");
 
 
-    const firstCell = cells[win[0]];
 
-    const lastCell = cells[win[2]];
+const firstCell = cells[win[0]];
 
+const lastCell = cells[win[2]];
 
 
-    const boardRect = board.getBoundingClientRect();
 
+const boardRect = board.getBoundingClientRect();
 
 
-    const firstRect = firstCell.getBoundingClientRect();
 
-    const lastRect = lastCell.getBoundingClientRect();
+const firstRect = firstCell.getBoundingClientRect();
 
+const lastRect = lastCell.getBoundingClientRect();
 
 
 
 
-    const x1 =
 
-    firstRect.left +
+const x1 =
 
-    firstRect.width / 2 -
+firstRect.left +
 
-    boardRect.left;
+firstRect.width/2 -
 
+boardRect.left;
 
 
 
+const y1 =
 
-    const y1 =
+firstRect.top +
 
-    firstRect.top +
+firstRect.height/2 -
 
-    firstRect.height / 2 -
+boardRect.top;
 
-    boardRect.top;
 
 
 
 
+const x2 =
 
+lastRect.left +
 
+lastRect.width/2 -
 
-    const x2 =
+boardRect.left;
 
-    lastRect.left +
 
-    lastRect.width / 2 -
 
-    boardRect.left;
+const y2 =
 
+lastRect.top +
 
+lastRect.height/2 -
 
+boardRect.top;
 
 
-    const y2 =
 
-    lastRect.top +
 
-    lastRect.height / 2 -
 
-    boardRect.top;
 
 
+const length = Math.sqrt(
 
+Math.pow(x2-x1,2)
 
++
 
+Math.pow(y2-y1,2)
 
+);
 
-    const length = Math.sqrt(
 
 
-        Math.pow(x2-x1,2)
 
-        +
 
-        Math.pow(y2-y1,2)
+const angle =
 
+Math.atan2(
 
-    );
+y2-y1,
 
+x2-x1
 
+)
 
+*
 
+(180/Math.PI);
 
 
 
-    const angle =
 
 
-    Math.atan2(
 
-        y2-y1,
 
-        x2-x1
+winningLine.style.width =
 
-    )
+`${length}px`;
 
-    *
 
-    (180/Math.PI);
 
+winningLine.style.left =
 
+`${x1}px`;
 
 
 
+winningLine.style.top =
 
+`${y1}px`;
 
-    winningLine.style.width =
 
-    `${length}px`;
 
+winningLine.style.transformOrigin =
 
+"0 50%";
 
-    winningLine.style.left =
 
-    `${x1}px`;
 
+winningLine.style.transform =
 
+`rotate(${angle}deg)`;
 
-    winningLine.style.top =
-
-    `${y1}px`;
-
-
-
-    winningLine.style.transform =
-
-    `rotate(${angle}deg)`;
 
 
 }
@@ -495,13 +467,14 @@ function showLine(win){
 function updateScore(){
 
 
-    xScore.textContent = scores.X;
+
+xScore.textContent = scores.X;
 
 
-    oScore.textContent = scores.O;
+oScore.textContent = scores.O;
 
 
-    drawScore.textContent = scores.draw;
+drawScore.textContent = scores.draw;
 
 
 }
@@ -518,79 +491,68 @@ function restartGame(){
 
 
 
-    currentPlayer="X";
+currentPlayer="X";
 
 
-    gameActive=true;
-
-
-
-    gameState=[
-
-        "",
-        "",
-        "",
-
-        "",
-        "",
-        "",
-
-        "",
-        "",
-        ""
-
-    ];
+gameActive=true;
 
 
 
+gameState=[
 
-    statusText.textContent =
+"",
+"",
+"",
 
-    "Player X's Turn";
+"",
+"",
+"",
 
+"",
+"",
+""
 
-
-    statusText.classList.remove(
-
-        "win",
-
-        "draw"
-
-    );
+];
 
 
 
 
 
-    cells.forEach(cell=>{
+statusText.textContent =
 
-
-        cell.textContent="";
-
-
-        cell.classList.remove(
-
-            "x",
-
-            "o"
-
-        );
-
-
-    });
+"Player X's Turn";
 
 
 
 
 
+cells.forEach(cell=>{
 
 
-    winningLine.style.width="0px";
+cell.textContent="";
 
 
-    winningLine.style.transform=
+cell.classList.remove(
 
-    "rotate(0deg)";
+"x",
+
+"o"
+
+);
+
+
+});
+
+
+
+
+
+winningLine.style.width="0px";
+
+
+winningLine.style.transform=
+
+"rotate(0deg)";
 
 
 
@@ -603,16 +565,17 @@ function restartGame(){
 
 
 
+
 cells.forEach(cell=>{
 
 
-    cell.addEventListener(
+cell.addEventListener(
 
-        "click",
+"click",
 
-        handleCellClick
+handleCellClick
 
-    );
+);
 
 
 });
@@ -626,8 +589,8 @@ cells.forEach(cell=>{
 
 restartButton.addEventListener(
 
-    "click",
+"click",
 
-    restartGame
+restartGame
 
 );
