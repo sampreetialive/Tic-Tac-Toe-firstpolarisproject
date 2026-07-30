@@ -1,148 +1,38 @@
-const cells = document.querySelectorAll(".cell");
+*{
 
-const statusText = document.getElementById("status");
+box-sizing:border-box;
 
-const restartButton = document.getElementById("restart");
-
-const winningLine = document.querySelector(".winning-line");
-
-
-const clickSound = document.getElementById("clickSound");
-
-const winSound = document.getElementById("winSound");
-
-const drawSound = document.getElementById("drawSound");
-
-
-
-let currentPlayer = "X";
-
-let gameActive = true;
-
-
-
-let gameState = [
-
-"",
-"",
-"",
-
-"",
-"",
-"",
-
-"",
-"",
-""
-
-];
-
-
-
-let scores = {
-
-X:0,
-
-O:0,
-
-draw:0
-
-};
-
-
-
-const xScore = document.getElementById("x-score");
-
-const oScore = document.getElementById("o-score");
-
-const drawScore = document.getElementById("draw-score");
-
-
-
-
-
-const winningConditions = [
-
-[0,1,2],
-
-[3,4,5],
-
-[6,7,8],
-
-[0,3,6],
-
-[1,4,7],
-
-[2,5,8],
-
-[0,4,8],
-
-[2,4,6]
-
-];
-
-
-
-
-
-
-
-
-
-function handleCellClick(){
-
-
-
-let index = this.dataset.index;
-
-
-
-if(gameState[index] !== "" || !gameActive){
-
-return;
+font-family:"Segoe UI",Arial,sans-serif;
 
 }
 
 
 
-gameState[index] = currentPlayer;
+body{
+
+margin:0;
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
 
 
+background:
 
-this.textContent = currentPlayer;
-
-
-
-// Neon X/O styling
-
-if(currentPlayer === "X"){
-
-this.classList.add("x");
-
-}
-
-else{
-
-this.classList.add("o");
-
-}
+radial-gradient(
+circle at top,
+#17002b,
+#030308 70%
+);
 
 
-
-
-if(clickSound){
-
-clickSound.currentTime = 0;
-
-clickSound.play();
-
-}
-
-
-
-checkWinner();
-
-
+color:white;
 
 }
 
@@ -150,39 +40,49 @@ checkWinner();
 
 
 
+.background-glow{
+
+position:absolute;
+
+width:600px;
+
+height:600px;
+
+
+background:
+
+radial-gradient(
+circle,
+rgba(0,170,255,.3),
+transparent 70%
+);
 
 
 
-
-function checkWinner(){
-
-
-
-let win = null;
+filter:blur(100px);
 
 
 
-for(let condition of winningConditions){
+animation:floatGlow 8s infinite alternate;
+
+
+}
 
 
 
-let [a,b,c] = condition;
+@keyframes floatGlow{
 
 
+from{
 
-if(
+transform:translate(-100px,-50px);
 
-gameState[a] &&
+}
 
-gameState[a] === gameState[b] &&
 
-gameState[a] === gameState[c]
+to{
 
-){
-
-win = condition;
-
-break;
+transform:translate(100px,50px);
 
 }
 
@@ -193,90 +93,17 @@ break;
 
 
 
-if(win){
 
 
+.container{
 
-statusText.textContent =
-`Player ${currentPlayer} Wins 🎉`;
+position:relative;
 
+z-index:2;
 
+text-align:center;
 
-scores[currentPlayer]++;
-
-
-
-updateScore();
-
-
-
-showLine(win);
-
-
-
-if(winSound){
-
-winSound.play();
-
-}
-
-
-
-confetti({
-
-particleCount:250,
-
-spread:120,
-
-origin:{
-y:.6
-}
-
-});
-
-
-
-gameActive=false;
-
-
-return;
-
-}
-
-
-
-
-
-if(!gameState.includes("")){
-
-
-
-statusText.textContent =
-"It's a Draw!";
-
-
-
-scores.draw++;
-
-
-
-updateScore();
-
-
-
-if(drawSound){
-
-drawSound.play();
-
-}
-
-
-
-gameActive=false;
-
-
-
-return;
+padding:20px;
 
 
 }
@@ -285,24 +112,34 @@ return;
 
 
 
-currentPlayer =
-
-currentPlayer === "X"
-
-?
-
-"O"
-
-:
-
-"X";
 
 
+/* TITLE */
 
-statusText.textContent =
 
-`Player ${currentPlayer}'s Turn`;
+h1{
 
+
+font-size:60px;
+
+
+letter-spacing:10px;
+
+
+color:white;
+
+
+
+text-shadow:
+
+
+0 0 15px white,
+
+0 0 40px white;
+
+
+
+margin-bottom:20px;
 
 
 }
@@ -316,142 +153,581 @@ statusText.textContent =
 
 
 
-// FIXED WINNING LINE CALCULATION
-
-function showLine(win){
+/* STATUS */
 
 
-
-const board = document.querySelector(".board");
-
+#status{
 
 
-const firstCell = cells[win[0]];
-
-const lastCell = cells[win[2]];
+height:55px;
 
 
+font-size:26px;
 
-const boardRect = board.getBoundingClientRect();
+
+font-weight:bold;
 
 
 
-const firstRect = firstCell.getBoundingClientRect();
-
-const lastRect = lastCell.getBoundingClientRect();
+display:flex;
 
 
+justify-content:center;
 
 
-
-const x1 =
-
-firstRect.left +
-
-firstRect.width/2 -
-
-boardRect.left;
+align-items:center;
 
 
 
-const y1 =
+color:white;
 
-firstRect.top +
 
-firstRect.height/2 -
 
-boardRect.top;
+transition:.3s;
+
+
+}
 
 
 
 
 
-const x2 =
-
-lastRect.left +
-
-lastRect.width/2 -
-
-boardRect.left;
+#status.win{
 
 
+font-size:38px;
 
-const y2 =
 
-lastRect.top +
+color:#39ff14;
 
-lastRect.height/2 -
 
-boardRect.top;
+
+text-shadow:
+
+
+0 0 20px #39ff14,
+
+0 0 50px #39ff14;
+
+
+}
 
 
 
 
 
 
+#status.draw{
 
-const length = Math.sqrt(
 
-Math.pow(x2-x1,2)
+font-size:38px;
 
-+
 
-Math.pow(y2-y1,2)
+color:#ff1744;
+
+
+
+text-shadow:
+
+
+0 0 20px #ff1744,
+
+0 0 50px #ff1744;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* SCOREBOARD */
+
+
+.scoreboard{
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+gap:20px;
+
+
+margin:25px;
+
+
+}
+
+
+
+
+
+.score-card{
+
+
+width:120px;
+
+
+padding:15px;
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(0,140,255,.15);
+
+
+
+border:
+
+2px solid #008cff;
+
+
+
+color:#00aaff;
+
+
+
+box-shadow:
+
+
+0 0 25px #008cff;
+
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+.score-card:hover{
+
+
+transform:
+
+translateY(-8px);
+
+
+}
+
+
+
+
+
+.score-card h3{
+
+
+margin:0;
+
+
+font-size:20px;
+
+
+}
+
+
+
+.score-card p{
+
+
+font-size:35px;
+
+
+margin:10px 0 0;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* BOARD */
+
+
+.board{
+
+
+position:relative;
+
+
+
+display:grid;
+
+
+
+grid-template-columns:
+
+repeat(3,110px);
+
+
+
+gap:15px;
+
+
+
+padding:15px;
+
+
+
+border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.05);
+
+
+
+box-shadow:
+
+
+0 0 40px rgba(0,170,255,.5);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+.cell{
+
+
+height:110px;
+
+
+width:110px;
+
+
+
+display:flex;
+
+
+
+justify-content:center;
+
+
+
+align-items:center;
+
+
+
+font-size:65px;
+
+
+
+font-weight:900;
+
+
+
+cursor:pointer;
+
+
+
+border-radius:20px;
+
+
+
+background:
+
+rgba(255,255,255,.05);
+
+
+
+border:
+
+2px solid rgba(255,255,255,.2);
+
+
+
+transition:.3s;
+
+
+
+}
+
+
+
+
+
+.cell:hover{
+
+
+transform:scale(1.1);
+
+
+
+border-color:#00f5ff;
+
+
+
+box-shadow:
+
+0 0 30px #00f5ff;
+
+
+}
+
+
+
+
+
+
+
+
+.cell.x{
+
+
+color:#00f5ff;
+
+
+
+text-shadow:
+
+
+0 0 15px #00f5ff,
+
+0 0 40px #00f5ff;
+
+
+animation:pop .3s;
+
+
+}
+
+
+
+
+
+.cell.o{
+
+
+color:#ff0080;
+
+
+
+text-shadow:
+
+
+0 0 15px #ff0080,
+
+0 0 40px #ff0080;
+
+
+
+animation:pop .3s;
+
+
+}
+
+
+
+
+
+
+
+
+@keyframes pop{
+
+
+0%{
+
+transform:scale(0);
+
+}
+
+
+70%{
+
+transform:scale(1.3);
+
+}
+
+
+100%{
+
+transform:scale(1);
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+/* WINNING LINE */
+
+
+.winning-line{
+
+
+position:absolute;
+
+
+
+height:8px;
+
+
+
+width:0;
+
+
+
+background:#00f5ff;
+
+
+
+border-radius:20px;
+
+
+
+z-index:50;
+
+
+
+box-shadow:
+
+
+0 0 20px #00f5ff,
+
+0 0 60px #00f5ff;
+
+
+
+transform-origin:left center;
+
+
+
+transition:
+
+width .5s ease,
+
+transform .5s ease;
+
+
+
+pointer-events:none;
+
+
+
+/* IMPORTANT FIX */
+
+grid-column:1 / -1;
+
+grid-row:1 / -1;
+
+
+}
+
+
+
+
+
+
+
+
+
+button{
+
+
+margin-top:35px;
+
+
+padding:15px 45px;
+
+
+
+font-size:20px;
+
+
+
+border:none;
+
+
+
+border-radius:50px;
+
+
+
+cursor:pointer;
+
+
+
+color:white;
+
+
+
+background:
+
+linear-gradient(
+
+45deg,
+
+#008cff,
+
+#00f5ff
 
 );
 
 
 
+box-shadow:
 
 
-const angle =
+0 0 30px #00f5ff;
 
-Math.atan2(
 
-y2-y1,
 
-x2-x1
+transition:.3s;
 
-)
 
-*
-
-(180/Math.PI);
+}
 
 
 
 
 
+button:hover{
 
 
-winningLine.style.width =
-
-`${length}px`;
-
-
-
-winningLine.style.left =
-
-`${x1}px`;
+transform:scale(1.1);
 
 
 
-winningLine.style.top =
-
-`${y1}px`;
+box-shadow:
 
 
-
-winningLine.style.transformOrigin =
-
-"0 50%";
-
-
-
-winningLine.style.transform =
-
-`rotate(${angle}deg)`;
-
+0 0 60px #00f5ff;
 
 
 }
@@ -463,18 +739,25 @@ winningLine.style.transform =
 
 
 
-
-function updateScore(){
-
+@media(max-width:600px){
 
 
-xScore.textContent = scores.X;
+
+h1{
+
+font-size:40px;
+
+}
 
 
-oScore.textContent = scores.O;
 
 
-drawScore.textContent = scores.draw;
+.board{
+
+
+grid-template-columns:
+
+repeat(3,80px);
 
 
 }
@@ -482,115 +765,21 @@ drawScore.textContent = scores.draw;
 
 
 
+.cell{
+
+
+height:80px;
+
+
+width:80px;
 
 
 
-
-
-function restartGame(){
-
-
-
-currentPlayer="X";
-
-
-gameActive=true;
-
-
-
-gameState=[
-
-"",
-"",
-"",
-
-"",
-"",
-"",
-
-"",
-"",
-""
-
-];
-
-
-
-
-
-statusText.textContent =
-
-"Player X's Turn";
-
-
-
-
-
-cells.forEach(cell=>{
-
-
-cell.textContent="";
-
-
-cell.classList.remove(
-
-"x",
-
-"o"
-
-);
-
-
-});
-
-
-
-
-
-winningLine.style.width="0px";
-
-
-winningLine.style.transform=
-
-"rotate(0deg)";
-
+font-size:45px;
 
 
 }
 
 
 
-
-
-
-
-
-
-cells.forEach(cell=>{
-
-
-cell.addEventListener(
-
-"click",
-
-handleCellClick
-
-);
-
-
-});
-
-
-
-
-
-
-
-
-restartButton.addEventListener(
-
-"click",
-
-restartGame
-
-);
+}
