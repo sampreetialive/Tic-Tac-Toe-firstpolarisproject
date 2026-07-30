@@ -22,26 +22,30 @@ let gameActive = true;
 
 
 let gameState = [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
+
+"",
+"",
+"",
+
+"",
+"",
+"",
+
+"",
+"",
+""
+
 ];
 
 
 
 let scores = {
 
-    X: 0,
+X:0,
 
-    O: 0,
+O:0,
 
-    draw: 0
+draw:0
 
 };
 
@@ -59,25 +63,25 @@ const drawScore = document.getElementById("draw-score");
 
 const winningConditions = [
 
-    [0,1,2],
+[0,1,2],
 
-    [3,4,5],
+[3,4,5],
 
-    [6,7,8],
+[6,7,8],
 
+[0,3,6],
 
-    [0,3,6],
+[1,4,7],
 
-    [1,4,7],
+[2,5,8],
 
-    [2,5,8],
+[0,4,8],
 
-
-    [0,4,8],
-
-    [2,4,6]
+[2,4,6]
 
 ];
+
+
 
 
 
@@ -88,34 +92,57 @@ const winningConditions = [
 function handleCellClick(){
 
 
-    let index = this.dataset.index;
+
+let index = this.dataset.index;
 
 
 
-    if(gameState[index] !== "" || !gameActive){
+if(gameState[index] !== "" || !gameActive){
 
-        return;
+return;
 
-    }
-
-
-
-    gameState[index] = currentPlayer;
-
-
-    this.textContent = currentPlayer;
+}
 
 
 
-    if(clickSound){
-
-        clickSound.play();
-
-    }
+gameState[index] = currentPlayer;
 
 
 
-    checkWinner();
+this.textContent = currentPlayer;
+
+
+
+// Neon X/O styling
+
+if(currentPlayer === "X"){
+
+this.classList.add("x");
+
+}
+
+else{
+
+this.classList.add("o");
+
+}
+
+
+
+
+if(clickSound){
+
+clickSound.currentTime = 0;
+
+clickSound.play();
+
+}
+
+
+
+checkWinner();
+
+
 
 }
 
@@ -130,135 +157,153 @@ function handleCellClick(){
 function checkWinner(){
 
 
-    let win = null;
 
+let win = null;
 
 
-    for(let condition of winningConditions){
 
+for(let condition of winningConditions){
 
-        let [a,b,c] = condition;
 
 
+let [a,b,c] = condition;
 
-        if(
 
-            gameState[a] &&
 
-            gameState[a] === gameState[b] &&
+if(
 
-            gameState[a] === gameState[c]
+gameState[a] &&
 
-        ){
+gameState[a] === gameState[b] &&
 
-            win = condition;
+gameState[a] === gameState[c]
 
-            break;
+){
 
-        }
+win = condition;
 
-    }
+break;
 
+}
 
 
+}
 
 
-    if(win){
 
 
-        statusText.textContent =
-        `Player ${currentPlayer} Wins 🎉`;
 
+if(win){
 
 
-        scores[currentPlayer]++;
 
+statusText.textContent =
+`Player ${currentPlayer} Wins 🎉`;
 
 
-        updateScore();
 
+scores[currentPlayer]++;
 
 
-        showLine(win);
 
+updateScore();
 
 
-        if(winSound){
 
-            winSound.play();
+showLine(win);
 
-        }
 
 
+if(winSound){
 
-        confetti({
+winSound.play();
 
-            particleCount:200,
+}
 
-            spread:120
 
-        });
 
+confetti({
 
+particleCount:250,
 
-        gameActive = false;
+spread:120,
 
+origin:{
+y:.6
+}
 
-        return;
+});
 
 
-    }
 
+gameActive=false;
 
 
+return;
 
+}
 
 
 
-    if(!gameState.includes("")){
 
 
-        statusText.textContent =
-        "It's a Draw!";
+if(!gameState.includes("")){
 
 
 
-        scores.draw++;
+statusText.textContent =
+"It's a Draw!";
 
 
 
-        updateScore();
+scores.draw++;
 
 
 
-        if(drawSound){
+updateScore();
 
-            drawSound.play();
 
-        }
 
+if(drawSound){
 
+drawSound.play();
 
-        gameActive = false;
+}
 
 
-        return;
 
+gameActive=false;
 
-    }
 
 
+return;
 
 
+}
 
 
-    currentPlayer =
-    currentPlayer === "X" ? "O" : "X";
 
 
 
-    statusText.textContent =
-    `Player ${currentPlayer}'s Turn`;
+currentPlayer =
+
+currentPlayer === "X"
+
+?
+
+"O"
+
+:
+
+"X";
+
+
+
+statusText.textContent =
+
+`Player ${currentPlayer}'s Turn`;
+
+
 
 }
 
@@ -270,111 +315,143 @@ function checkWinner(){
 
 
 
-// NEW FIXED WINNING LINE SYSTEM
+
+// FIXED WINNING LINE CALCULATION
 
 function showLine(win){
 
 
-    const board = document.querySelector(".board");
 
-
-    const firstCell = cells[win[0]];
-
-    const lastCell = cells[win[2]];
+const board = document.querySelector(".board");
 
 
 
-    const boardRect = board.getBoundingClientRect();
+const firstCell = cells[win[0]];
 
-
-    const firstRect = firstCell.getBoundingClientRect();
-
-    const lastRect = lastCell.getBoundingClientRect();
+const lastCell = cells[win[2]];
 
 
 
-
-    const x1 =
-    firstRect.left +
-    firstRect.width / 2 -
-    boardRect.left;
+const boardRect = board.getBoundingClientRect();
 
 
 
-    const y1 =
-    firstRect.top +
-    firstRect.height / 2 -
-    boardRect.top;
+const firstRect = firstCell.getBoundingClientRect();
 
-
-
-
-    const x2 =
-    lastRect.left +
-    lastRect.width / 2 -
-    boardRect.left;
-
-
-
-    const y2 =
-    lastRect.top +
-    lastRect.height / 2 -
-    boardRect.top;
+const lastRect = lastCell.getBoundingClientRect();
 
 
 
 
 
-    const length =
-    Math.sqrt(
+const x1 =
 
-        Math.pow(x2-x1,2) +
-        Math.pow(y2-y1,2)
+firstRect.left +
 
-    );
+firstRect.width/2 -
 
-
+boardRect.left;
 
 
 
-    const angle =
-    Math.atan2(
+const y1 =
 
-        y2-y1,
+firstRect.top +
 
-        x2-x1
+firstRect.height/2 -
 
-    )
-    *
-    (180 / Math.PI);
+boardRect.top;
+
+
+
+
+
+const x2 =
+
+lastRect.left +
+
+lastRect.width/2 -
+
+boardRect.left;
+
+
+
+const y2 =
+
+lastRect.top +
+
+lastRect.height/2 -
+
+boardRect.top;
 
 
 
 
 
 
-    winningLine.style.width =
-    `${length}px`;
+
+const length = Math.sqrt(
+
+Math.pow(x2-x1,2)
+
++
+
+Math.pow(y2-y1,2)
+
+);
 
 
 
-    winningLine.style.left =
-    `${x1}px`;
+
+
+const angle =
+
+Math.atan2(
+
+y2-y1,
+
+x2-x1
+
+)
+
+*
+
+(180/Math.PI);
 
 
 
-    winningLine.style.top =
-    `${y1}px`;
 
 
 
-    winningLine.style.transformOrigin =
-    "0 50%";
+
+winningLine.style.width =
+
+`${length}px`;
 
 
 
-    winningLine.style.transform =
-    `rotate(${angle}deg)`;
+winningLine.style.left =
+
+`${x1}px`;
+
+
+
+winningLine.style.top =
+
+`${y1}px`;
+
+
+
+winningLine.style.transformOrigin =
+
+"0 50%";
+
+
+
+winningLine.style.transform =
+
+`rotate(${angle}deg)`;
+
 
 
 }
@@ -390,13 +467,14 @@ function showLine(win){
 function updateScore(){
 
 
-    xScore.textContent = scores.X;
+
+xScore.textContent = scores.X;
 
 
-    oScore.textContent = scores.O;
+oScore.textContent = scores.O;
 
 
-    drawScore.textContent = scores.draw;
+drawScore.textContent = scores.draw;
 
 
 }
@@ -412,51 +490,70 @@ function updateScore(){
 function restartGame(){
 
 
-    currentPlayer = "X";
+
+currentPlayer="X";
 
 
-    gameActive = true;
-
-
-
-    gameState = [
-
-        "",
-        "",
-        "",
-
-        "",
-        "",
-        "",
-
-        "",
-        "",
-        ""
-
-    ];
+gameActive=true;
 
 
 
-    statusText.textContent =
-    "Player X's Turn";
+gameState=[
 
+"",
+"",
+"",
 
+"",
+"",
+"",
 
-    cells.forEach(cell=>{
+"",
+"",
+""
 
-
-        cell.textContent = "";
-
-
-    });
+];
 
 
 
 
-    winningLine.style.width = "0px";
 
-    winningLine.style.transform =
-    "rotate(0deg)";
+statusText.textContent =
+
+"Player X's Turn";
+
+
+
+
+
+cells.forEach(cell=>{
+
+
+cell.textContent="";
+
+
+cell.classList.remove(
+
+"x",
+
+"o"
+
+);
+
+
+});
+
+
+
+
+
+winningLine.style.width="0px";
+
+
+winningLine.style.transform=
+
+"rotate(0deg)";
+
 
 
 }
@@ -472,10 +569,13 @@ function restartGame(){
 cells.forEach(cell=>{
 
 
-    cell.addEventListener(
-        "click",
-        handleCellClick
-    );
+cell.addEventListener(
+
+"click",
+
+handleCellClick
+
+);
 
 
 });
@@ -486,7 +586,11 @@ cells.forEach(cell=>{
 
 
 
+
 restartButton.addEventListener(
-    "click",
-    restartGame
+
+"click",
+
+restartGame
+
 );
