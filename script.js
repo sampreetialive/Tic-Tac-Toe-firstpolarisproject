@@ -86,11 +86,25 @@ const winningConditions = [
 
 
 
+function playSound(sound){
+
+if(sound){
+
+sound.currentTime = 0;
+
+sound.play().catch(()=>{});
+
+}
+
+}
+
+
+
+
 
 
 
 function handleCellClick(){
-
 
 
 let index = this.dataset.index;
@@ -105,6 +119,7 @@ return;
 
 
 
+
 gameState[index] = currentPlayer;
 
 
@@ -113,7 +128,7 @@ this.textContent = currentPlayer;
 
 
 
-// Neon X/O styling
+
 
 if(currentPlayer === "X"){
 
@@ -129,14 +144,7 @@ this.classList.add("o");
 
 
 
-
-if(clickSound){
-
-clickSound.currentTime = 0;
-
-clickSound.play();
-
-}
+playSound(clickSound);
 
 
 
@@ -157,13 +165,11 @@ checkWinner();
 function checkWinner(){
 
 
-
 let win = null;
 
 
 
 for(let condition of winningConditions){
-
 
 
 let [a,b,c] = condition;
@@ -180,14 +186,18 @@ gameState[a] === gameState[c]
 
 ){
 
+
 win = condition;
 
 break;
 
+
 }
 
 
 }
+
+
 
 
 
@@ -198,7 +208,14 @@ if(win){
 
 
 statusText.textContent =
+
 `Player ${currentPlayer} Wins 🎉`;
+
+
+
+statusText.classList.remove("draw");
+
+statusText.classList.add("win");
 
 
 
@@ -214,11 +231,7 @@ showLine(win);
 
 
 
-if(winSound){
-
-winSound.play();
-
-}
+playSound(winSound);
 
 
 
@@ -226,11 +239,7 @@ confetti({
 
 particleCount:250,
 
-spread:120,
-
-origin:{
-y:.6
-}
+spread:120
 
 });
 
@@ -239,9 +248,15 @@ y:.6
 gameActive=false;
 
 
+
 return;
 
+
 }
+
+
+
+
 
 
 
@@ -250,9 +265,15 @@ return;
 if(!gameState.includes("")){
 
 
-
 statusText.textContent =
+
 "It's a Draw!";
+
+
+
+statusText.classList.remove("win");
+
+statusText.classList.add("draw");
 
 
 
@@ -264,11 +285,7 @@ updateScore();
 
 
 
-if(drawSound){
-
-drawSound.play();
-
-}
+playSound(drawSound);
 
 
 
@@ -280,6 +297,8 @@ return;
 
 
 }
+
+
 
 
 
@@ -299,9 +318,21 @@ currentPlayer === "X"
 
 
 
+
+
 statusText.textContent =
 
 `Player ${currentPlayer}'s Turn`;
+
+
+
+statusText.classList.remove(
+
+"win",
+
+"draw"
+
+);
 
 
 
@@ -316,7 +347,9 @@ statusText.textContent =
 
 
 
-// FIXED WINNING LINE CALCULATION
+
+
+// FIXED WINNING LINE
 
 function showLine(win){
 
@@ -332,13 +365,25 @@ const lastCell = cells[win[2]];
 
 
 
-const boardRect = board.getBoundingClientRect();
+
+const boardRect =
+
+board.getBoundingClientRect();
 
 
 
-const firstRect = firstCell.getBoundingClientRect();
 
-const lastRect = lastCell.getBoundingClientRect();
+const firstRect =
+
+firstCell.getBoundingClientRect();
+
+
+
+const lastRect =
+
+lastCell.getBoundingClientRect();
+
+
 
 
 
@@ -390,6 +435,7 @@ boardRect.top;
 
 
 
+
 const length = Math.sqrt(
 
 Math.pow(x2-x1,2)
@@ -417,7 +463,6 @@ x2-x1
 *
 
 (180/Math.PI);
-
 
 
 
@@ -493,7 +538,6 @@ function restartGame(){
 
 currentPlayer="X";
 
-
 gameActive=true;
 
 
@@ -517,10 +561,20 @@ gameState=[
 
 
 
-
 statusText.textContent =
 
 "Player X's Turn";
+
+
+
+statusText.classList.remove(
+
+"win",
+
+"draw"
+
+);
+
 
 
 
@@ -547,6 +601,7 @@ cell.classList.remove(
 
 
 
+
 winningLine.style.width="0px";
 
 
@@ -557,8 +612,6 @@ winningLine.style.transform=
 
 
 }
-
-
 
 
 
@@ -579,9 +632,6 @@ handleCellClick
 
 
 });
-
-
-
 
 
 
