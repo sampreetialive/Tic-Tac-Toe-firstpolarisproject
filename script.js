@@ -22,32 +22,29 @@ let gameActive = true;
 
 
 let gameState = [
-
-"",
-"",
-"",
-
-"",
-"",
-"",
-
-"",
-"",
-""
-
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
 ];
 
 
 
 let scores = {
 
-X:0,
+    X:0,
 
-O:0,
+    O:0,
 
-draw:0
+    draw:0
 
 };
+
 
 
 
@@ -61,23 +58,25 @@ const drawScore = document.getElementById("draw-score");
 
 
 
+
+
 const winningConditions = [
 
-[0,1,2],
+    [0,1,2],
 
-[3,4,5],
+    [3,4,5],
 
-[6,7,8],
+    [6,7,8],
 
-[0,3,6],
+    [0,3,6],
 
-[1,4,7],
+    [1,4,7],
 
-[2,5,8],
+    [2,5,8],
 
-[0,4,8],
+    [0,4,8],
 
-[2,4,6]
+    [2,4,6]
 
 ];
 
@@ -86,17 +85,22 @@ const winningConditions = [
 
 
 
+
+
 function playSound(sound){
 
-if(sound){
 
-sound.currentTime = 0;
+    if(sound){
 
-sound.play().catch(()=>{});
+        sound.currentTime = 0;
+
+        sound.play().catch(()=>{});
+
+    }
+
 
 }
 
-}
 
 
 
@@ -107,48 +111,47 @@ sound.play().catch(()=>{});
 function handleCellClick(){
 
 
-let index = this.dataset.index;
+    let index = this.dataset.index;
 
 
 
-if(gameState[index] !== "" || !gameActive){
+    if(gameState[index] !== "" || !gameActive){
 
-return;
+        return;
 
-}
-
-
-
-
-gameState[index] = currentPlayer;
+    }
 
 
 
-this.textContent = currentPlayer;
+    gameState[index] = currentPlayer;
 
+
+
+    this.textContent = currentPlayer;
 
 
 
 
-if(currentPlayer === "X"){
+    if(currentPlayer === "X"){
 
-this.classList.add("x");
+        this.classList.add("x");
 
-}
+    }
 
-else{
+    else{
 
-this.classList.add("o");
+        this.classList.add("o");
 
-}
-
-
-
-playSound(clickSound);
+    }
 
 
 
-checkWinner();
+
+    playSound(clickSound);
+
+
+
+    checkWinner();
 
 
 
@@ -165,94 +168,94 @@ checkWinner();
 function checkWinner(){
 
 
-let win = null;
+    let win = null;
 
 
 
-for(let condition of winningConditions){
+    for(let condition of winningConditions){
 
 
-let [a,b,c] = condition;
+        let [a,b,c] = condition;
 
 
 
-if(
+        if(
 
-gameState[a] &&
+            gameState[a] &&
 
-gameState[a] === gameState[b] &&
+            gameState[a] === gameState[b] &&
 
-gameState[a] === gameState[c]
+            gameState[a] === gameState[c]
 
-){
+        ){
 
+            win = condition;
 
-win = condition;
+            break;
 
-break;
+        }
 
 
-}
+    }
 
 
-}
 
 
 
 
 
+    if(win){
 
 
-if(win){
 
+        statusText.textContent =
 
+        `Player ${currentPlayer} Wins 🎉`;
 
-statusText.textContent =
 
-`Player ${currentPlayer} Wins 🎉`;
 
+        statusText.classList.remove("draw");
 
+        statusText.classList.add("win");
 
-statusText.classList.remove("draw");
 
-statusText.classList.add("win");
 
+        scores[currentPlayer]++;
 
 
-scores[currentPlayer]++;
 
+        updateScore();
 
 
-updateScore();
 
+        showLine(win);
 
 
-showLine(win);
 
+        playSound(winSound);
 
 
-playSound(winSound);
 
 
+        confetti({
 
-confetti({
+            particleCount:250,
 
-particleCount:250,
+            spread:120
 
-spread:120
+        });
 
-});
 
 
+        gameActive=false;
 
-gameActive=false;
 
 
+        return;
 
-return;
 
 
-}
+    }
 
 
 
@@ -262,77 +265,71 @@ return;
 
 
 
-if(!gameState.includes("")){
 
+    if(!gameState.includes("")){
 
-statusText.textContent =
 
-"It's a Draw!";
 
+        statusText.textContent =
 
+        "It's a Draw!";
 
-statusText.classList.remove("win");
 
-statusText.classList.add("draw");
 
+        statusText.classList.remove("win");
 
+        statusText.classList.add("draw");
 
-scores.draw++;
 
 
+        scores.draw++;
 
-updateScore();
 
 
+        updateScore();
 
-playSound(drawSound);
 
 
+        playSound(drawSound);
 
-gameActive=false;
 
 
+        gameActive=false;
 
-return;
 
 
-}
+        return;
 
 
+    }
 
 
 
 
 
-currentPlayer =
 
-currentPlayer === "X"
 
-?
 
-"O"
 
-:
+    currentPlayer =
 
-"X";
+    currentPlayer === "X"
 
+    ?
 
+    "O"
 
+    :
 
+    "X";
 
-statusText.textContent =
 
-`Player ${currentPlayer}'s Turn`;
 
 
 
-statusText.classList.remove(
+    statusText.textContent =
 
-"win",
-
-"draw"
-
-);
+    `Player ${currentPlayer}'s Turn`;
 
 
 
@@ -345,158 +342,144 @@ statusText.classList.remove(
 
 
 
-
-
-
-
-// FIXED WINNING LINE
 
 function showLine(win){
 
 
 
-const board = document.querySelector(".board");
+    const board = document.querySelector(".board");
 
 
+    const firstCell = cells[win[0]];
 
-const firstCell = cells[win[0]];
+    const lastCell = cells[win[2]];
 
-const lastCell = cells[win[2]];
 
 
+    const boardRect = board.getBoundingClientRect();
 
 
-const boardRect =
 
-board.getBoundingClientRect();
+    const firstRect = firstCell.getBoundingClientRect();
 
+    const lastRect = lastCell.getBoundingClientRect();
 
 
 
-const firstRect =
 
-firstCell.getBoundingClientRect();
 
+    const x1 =
 
+    firstRect.left +
 
-const lastRect =
+    firstRect.width / 2 -
 
-lastCell.getBoundingClientRect();
+    boardRect.left;
 
 
 
 
 
+    const y1 =
 
+    firstRect.top +
 
-const x1 =
+    firstRect.height / 2 -
 
-firstRect.left +
+    boardRect.top;
 
-firstRect.width/2 -
 
-boardRect.left;
 
 
 
-const y1 =
 
-firstRect.top +
 
-firstRect.height/2 -
+    const x2 =
 
-boardRect.top;
+    lastRect.left +
 
+    lastRect.width / 2 -
 
+    boardRect.left;
 
 
 
-const x2 =
 
-lastRect.left +
 
-lastRect.width/2 -
+    const y2 =
 
-boardRect.left;
+    lastRect.top +
 
+    lastRect.height / 2 -
 
+    boardRect.top;
 
-const y2 =
 
-lastRect.top +
 
-lastRect.height/2 -
 
-boardRect.top;
 
 
 
+    const length = Math.sqrt(
 
 
+        Math.pow(x2-x1,2)
 
+        +
 
+        Math.pow(y2-y1,2)
 
-const length = Math.sqrt(
 
-Math.pow(x2-x1,2)
+    );
 
-+
 
-Math.pow(y2-y1,2)
 
-);
 
 
 
 
+    const angle =
 
-const angle =
 
-Math.atan2(
+    Math.atan2(
 
-y2-y1,
+        y2-y1,
 
-x2-x1
+        x2-x1
 
-)
+    )
 
-*
+    *
 
-(180/Math.PI);
+    (180/Math.PI);
 
 
 
 
 
 
-winningLine.style.width =
 
-`${length}px`;
+    winningLine.style.width =
 
+    `${length}px`;
 
 
-winningLine.style.left =
 
-`${x1}px`;
+    winningLine.style.left =
 
+    `${x1}px`;
 
 
-winningLine.style.top =
 
-`${y1}px`;
+    winningLine.style.top =
 
+    `${y1}px`;
 
 
-winningLine.style.transformOrigin =
 
-"0 50%";
+    winningLine.style.transform =
 
-
-
-winningLine.style.transform =
-
-`rotate(${angle}deg)`;
-
+    `rotate(${angle}deg)`;
 
 
 }
@@ -512,14 +495,13 @@ winningLine.style.transform =
 function updateScore(){
 
 
-
-xScore.textContent = scores.X;
-
-
-oScore.textContent = scores.O;
+    xScore.textContent = scores.X;
 
 
-drawScore.textContent = scores.draw;
+    oScore.textContent = scores.O;
+
+
+    drawScore.textContent = scores.draw;
 
 
 }
@@ -536,78 +518,79 @@ function restartGame(){
 
 
 
-currentPlayer="X";
-
-gameActive=true;
+    currentPlayer="X";
 
 
-
-gameState=[
-
-"",
-"",
-"",
-
-"",
-"",
-"",
-
-"",
-"",
-""
-
-];
+    gameActive=true;
 
 
 
+    gameState=[
 
-statusText.textContent =
+        "",
+        "",
+        "",
 
-"Player X's Turn";
+        "",
+        "",
+        "",
 
+        "",
+        "",
+        ""
 
-
-statusText.classList.remove(
-
-"win",
-
-"draw"
-
-);
+    ];
 
 
 
 
+    statusText.textContent =
+
+    "Player X's Turn";
 
 
-cells.forEach(cell=>{
 
+    statusText.classList.remove(
 
-cell.textContent="";
+        "win",
 
+        "draw"
 
-cell.classList.remove(
-
-"x",
-
-"o"
-
-);
-
-
-});
+    );
 
 
 
 
 
+    cells.forEach(cell=>{
 
-winningLine.style.width="0px";
+
+        cell.textContent="";
 
 
-winningLine.style.transform=
+        cell.classList.remove(
 
-"rotate(0deg)";
+            "x",
+
+            "o"
+
+        );
+
+
+    });
+
+
+
+
+
+
+
+    winningLine.style.width="0px";
+
+
+    winningLine.style.transform=
+
+    "rotate(0deg)";
 
 
 
@@ -619,16 +602,17 @@ winningLine.style.transform=
 
 
 
+
 cells.forEach(cell=>{
 
 
-cell.addEventListener(
+    cell.addEventListener(
 
-"click",
+        "click",
 
-handleCellClick
+        handleCellClick
 
-);
+    );
 
 
 });
@@ -637,10 +621,13 @@ handleCellClick
 
 
 
+
+
+
 restartButton.addEventListener(
 
-"click",
+    "click",
 
-restartGame
+    restartGame
 
 );
