@@ -9,9 +9,7 @@
 
 <title>Neon Tic-Tac-Toe</title>
 
-
 <link rel="stylesheet" href="style.css">
-
 
 </head>
 
@@ -22,119 +20,53 @@
 <div class="background-glow"></div>
 
 
-
 <div class="container">
 
 
-    <h1>
-        TIC <span>⚡</span> TAC <span>⚡</span> TOE
-    </h1>
+<h1>
+TIC TAC TOE
+</h1>
 
 
 
-    <div id="status">
+<div id="status">
+Player X's Turn
+</div>
 
-        Player X's Turn
 
-    </div>
 
 
 
+<div class="scoreboard">
 
-    <div class="scoreboard">
 
+<div class="score-card">
 
-        <div class="score-card x-card">
+<h3>X</h3>
 
-            <h3>X</h3>
+<p id="x-score">0</p>
 
-            <p id="x-score">
-                0
-            </p>
+</div>
 
-        </div>
 
 
+<div class="score-card">
 
-        <div class="score-card draw-card">
+<h3>DRAW</h3>
 
-            <h3>DRAW</h3>
+<p id="draw-score">0</p>
 
-            <p id="draw-score">
-                0
-            </p>
+</div>
 
-        </div>
 
 
+<div class="score-card">
 
-        <div class="score-card o-card">
+<h3>O</h3>
 
-            <h3>O</h3>
+<p id="o-score">0</p>
 
-            <p id="o-score">
-                0
-            </p>
-
-        </div>
-
-
-
-    </div>
-
-
-
-
-
-    <div class="game-area">
-
-
-        <div class="board">
-
-
-            <div class="cell" data-index="0"></div>
-
-            <div class="cell" data-index="1"></div>
-
-            <div class="cell" data-index="2"></div>
-
-
-
-            <div class="cell" data-index="3"></div>
-
-            <div class="cell" data-index="4"></div>
-
-            <div class="cell" data-index="5"></div>
-
-
-
-            <div class="cell" data-index="6"></div>
-
-            <div class="cell" data-index="7"></div>
-
-            <div class="cell" data-index="8"></div>
-
-
-
-            <div class="winning-line"></div>
-
-
-        </div>
-
-
-
-    </div>
-
-
-
-
-
-    <button id="restart">
-
-        ↻ NEW GAME
-
-    </button>
-
+</div>
 
 
 
@@ -145,11 +77,67 @@
 
 
 
-<!-- Sounds -->
+
+<div class="board">
+
+
+<div class="cell" data-index="0"></div>
+
+<div class="cell" data-index="1"></div>
+
+<div class="cell" data-index="2"></div>
+
+
+
+<div class="cell" data-index="3"></div>
+
+<div class="cell" data-index="4"></div>
+
+<div class="cell" data-index="5"></div>
+
+
+
+<div class="cell" data-index="6"></div>
+
+<div class="cell" data-index="7"></div>
+
+<div class="cell" data-index="8"></div>
+
+
+
+
+<div class="winning-line"></div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<button id="restart">
+
+↻ NEW GAME
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+
+
 
 <audio id="clickSound">
 
-    <source src="click.mp3">
+<source src="neon-click.mp3" type="audio/mpeg">
 
 </audio>
 
@@ -157,7 +145,7 @@
 
 <audio id="winSound">
 
-    <source src="win.mp3">
+<source src="victory.mp3" type="audio/mpeg">
 
 </audio>
 
@@ -165,7 +153,7 @@
 
 <audio id="drawSound">
 
-    <source src="draw.mp3">
+<source src="draw-effect.mp3" type="audio/mpeg">
 
 </audio>
 
@@ -173,15 +161,10 @@
 
 
 
-<!-- Confetti Library -->
-
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 
-
-
 <script src="script.js"></script>
-
 
 
 </body>
