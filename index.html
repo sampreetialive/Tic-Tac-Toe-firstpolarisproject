@@ -3,81 +3,110 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tic-Tac-Toe</title>
+<title>Tic-Tac-Toe</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 
 <body>
 
+
 <div class="container">
 
-    <h1>Tic-Tac-Toe</h1>
+
+<h1>🎮 Tic-Tac-Toe</h1>
 
 
-    <div id="status">
-        Player X's Turn
-    </div>
-
-
-
-    <div class="scoreboard">
-
-        <div>
-            X Wins:
-            <span id="x-score">0</span>
-        </div>
-
-
-        <div>
-            O Wins:
-            <span id="o-score">0</span>
-        </div>
-
-
-        <div>
-            Draws:
-            <span id="draw-score">0</span>
-        </div>
-
-    </div>
+<div id="status">
+Player X's Turn
+</div>
 
 
 
+<div class="scoreboard">
 
-    <div class="board">
-
-        <div class="winning-line"></div>
-
-
-        <div class="cell" data-index="0"></div>
-        <div class="cell" data-index="1"></div>
-        <div class="cell" data-index="2"></div>
-
-        <div class="cell" data-index="3"></div>
-        <div class="cell" data-index="4"></div>
-        <div class="cell" data-index="5"></div>
-
-        <div class="cell" data-index="6"></div>
-        <div class="cell" data-index="7"></div>
-        <div class="cell" data-index="8"></div>
-
-    </div>
+<div>
+X Wins:
+<span id="x-score">0</span>
+</div>
 
 
+<div>
+O Wins:
+<span id="o-score">0</span>
+</div>
 
-    <button id="restart">
-        Restart Game
-    </button>
+
+<div>
+Draws:
+<span id="draw-score">0</span>
+</div>
+
+</div>
+
+
+
+
+<div class="board">
+
+
+<div class="winning-line"></div>
+
+
+<div class="cell" data-index="0"></div>
+<div class="cell" data-index="1"></div>
+<div class="cell" data-index="2"></div>
+
+<div class="cell" data-index="3"></div>
+<div class="cell" data-index="4"></div>
+<div class="cell" data-index="5"></div>
+
+<div class="cell" data-index="6"></div>
+<div class="cell" data-index="7"></div>
+<div class="cell" data-index="8"></div>
 
 
 </div>
 
+
+
+
+<button id="restart">
+Restart Game 🔄
+</button>
+
+
+</div>
+
+
+
+<!-- Sound Effects -->
+
+<audio id="clickSound">
+https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3
+</audio>
+
+
+<audio id="winSound">
+https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3
+</audio>
+
+
+<audio id="drawSound">
+https://assets.mixkit.co/active_storage/sfx/3005/3005-preview.mp3
+</audio>
+
+
+
+
+<!-- Confetti Library -->
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
 
 <script src="script.js"></script>
