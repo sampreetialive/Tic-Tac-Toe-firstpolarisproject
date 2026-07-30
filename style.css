@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
+
 *{
 
 box-sizing:border-box;
 
-font-family:"Segoe UI",Arial,sans-serif;
+font-family:'Orbitron',sans-serif;
 
 }
 
@@ -20,21 +23,30 @@ justify-content:center;
 
 align-items:center;
 
-overflow:hidden;
-
 
 background:
 
-radial-gradient(
-circle at top,
-#17002b,
-#030308 70%
+linear-gradient(
+
+135deg,
+
+#050510,
+
+#090020,
+
+#001522
+
 );
 
 
 color:white;
 
+overflow:hidden;
+
+
 }
+
+
 
 
 
@@ -42,35 +54,42 @@ color:white;
 
 .background-glow{
 
+
 position:absolute;
 
-width:600px;
 
-height:600px;
+width:700px;
+
+
+height:700px;
 
 
 background:
 
 radial-gradient(
+
 circle,
-rgba(0,170,255,.3),
-transparent 70%
+
+rgba(0,245,255,.15),
+
+transparent 65%
+
 );
 
 
-
-filter:blur(100px);
-
+filter:blur(80px);
 
 
-animation:floatGlow 8s infinite alternate;
+animation:
+
+float 8s infinite alternate;
 
 
 }
 
 
 
-@keyframes floatGlow{
+@keyframes float{
 
 
 from{
@@ -95,15 +114,23 @@ transform:translate(100px,50px);
 
 
 
+
 .container{
 
-position:relative;
 
-z-index:2;
+width:500px;
+
+
+max-width:95vw;
+
 
 text-align:center;
 
-padding:20px;
+
+position:relative;
+
+
+z-index:2;
 
 
 }
@@ -114,16 +141,21 @@ padding:20px;
 
 
 
-/* TITLE */
-
-
 h1{
 
 
-font-size:60px;
+font-size:55px;
 
 
-letter-spacing:10px;
+letter-spacing:8px;
+
+
+margin:0 0 20px;
+
+
+
+font-weight:900;
+
 
 
 color:white;
@@ -135,11 +167,8 @@ text-shadow:
 
 0 0 15px white,
 
-0 0 40px white;
+0 0 35px rgba(255,255,255,.7);
 
-
-
-margin-bottom:20px;
 
 
 }
@@ -150,37 +179,22 @@ margin-bottom:20px;
 
 
 
-
-
-
-/* STATUS */
-
-
 #status{
 
 
-height:55px;
+height:45px;
 
 
-font-size:26px;
+font-size:22px;
 
 
-font-weight:bold;
+font-weight:600;
 
 
-
-display:flex;
-
-
-justify-content:center;
+color:#cfcfcf;
 
 
-align-items:center;
-
-
-
-color:white;
-
+margin-bottom:25px;
 
 
 transition:.3s;
@@ -192,14 +206,15 @@ transition:.3s;
 
 
 
+
+
 #status.win{
 
 
-font-size:38px;
+font-size:34px;
 
 
 color:#39ff14;
-
 
 
 text-shadow:
@@ -216,15 +231,13 @@ text-shadow:
 
 
 
-
 #status.draw{
 
 
-font-size:38px;
+font-size:34px;
 
 
 color:#ff1744;
-
 
 
 text-shadow:
@@ -245,7 +258,8 @@ text-shadow:
 
 
 
-/* SCOREBOARD */
+/* SCORE */
+
 
 
 .scoreboard{
@@ -257,10 +271,10 @@ display:flex;
 justify-content:center;
 
 
-gap:20px;
+gap:15px;
 
 
-margin:25px;
+margin-bottom:35px;
 
 
 }
@@ -278,30 +292,29 @@ width:120px;
 padding:15px;
 
 
-border-radius:20px;
-
+border-radius:18px;
 
 
 background:
 
-rgba(0,140,255,.15);
+rgba(0,140,255,.12);
 
 
 
 border:
 
-2px solid #008cff;
-
-
-
-color:#00aaff;
+1px solid rgba(0,170,255,.6);
 
 
 
 box-shadow:
 
 
-0 0 25px #008cff;
+0 0 25px rgba(0,170,255,.5);
+
+
+
+backdrop-filter:blur(15px);
 
 
 
@@ -313,43 +326,58 @@ transition:.3s;
 
 
 
+
 .score-card:hover{
 
 
 transform:
 
-translateY(-8px);
+translateY(-5px);
 
 
 }
 
 
 
+.score-card span{
 
 
-.score-card h3{
+display:block;
 
 
-margin:0;
+font-size:14px;
 
 
-font-size:20px;
+color:#9edcff;
 
 
 }
 
 
 
-.score-card p{
+.score-card strong{
+
+
+display:block;
 
 
 font-size:35px;
 
 
-margin:10px 0 0;
+margin-top:8px;
+
+
+color:white;
+
+
+text-shadow:
+
+
+0 0 15px #00aaff;
 
 
 }
+
 
 
 
@@ -368,9 +396,7 @@ margin:10px 0 0;
 position:relative;
 
 
-
 display:grid;
-
 
 
 grid-template-columns:
@@ -383,11 +409,46 @@ gap:15px;
 
 
 
+justify-content:center;
+
+
+
 padding:15px;
 
 
-
 border-radius:25px;
+
+
+
+background:
+
+rgba(255,255,255,.03);
+
+
+
+box-shadow:
+
+
+0 0 40px rgba(0,245,255,.25);
+
+
+}
+
+
+
+
+
+.cell{
+
+
+width:110px;
+
+
+height:110px;
+
+
+
+border-radius:22px;
 
 
 
@@ -397,39 +458,16 @@ rgba(255,255,255,.05);
 
 
 
-box-shadow:
+border:
 
-
-0 0 40px rgba(0,170,255,.5);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-.cell{
-
-
-height:110px;
-
-
-width:110px;
+1px solid rgba(255,255,255,.15);
 
 
 
 display:flex;
 
 
-
 justify-content:center;
-
 
 
 align-items:center;
@@ -448,23 +486,7 @@ cursor:pointer;
 
 
 
-border-radius:20px;
-
-
-
-background:
-
-rgba(255,255,255,.05);
-
-
-
-border:
-
-2px solid rgba(255,255,255,.2);
-
-
-
-transition:.3s;
+transition:.25s;
 
 
 
@@ -477,21 +499,25 @@ transition:.3s;
 .cell:hover{
 
 
-transform:scale(1.1);
+background:
+
+rgba(0,245,255,.12);
 
 
 
-border-color:#00f5ff;
+transform:
+
+translateY(-5px);
 
 
 
 box-shadow:
 
+
 0 0 30px #00f5ff;
 
 
 }
-
 
 
 
@@ -509,16 +535,17 @@ color:#00f5ff;
 text-shadow:
 
 
-0 0 15px #00f5ff,
+0 0 20px #00f5ff,
 
-0 0 40px #00f5ff;
+0 0 45px #00f5ff;
 
 
-animation:pop .3s;
+animation:
+
+pop .3s;
 
 
 }
-
 
 
 
@@ -533,18 +560,17 @@ color:#ff0080;
 text-shadow:
 
 
-0 0 15px #ff0080,
+0 0 20px #ff0080,
 
-0 0 40px #ff0080;
+0 0 45px #ff0080;
 
 
+animation:
 
-animation:pop .3s;
+pop .3s;
 
 
 }
-
-
 
 
 
@@ -563,7 +589,7 @@ transform:scale(0);
 
 70%{
 
-transform:scale(1.3);
+transform:scale(1.2);
 
 }
 
@@ -584,8 +610,8 @@ transform:scale(1);
 
 
 
+/* WIN LINE */
 
-/* WINNING LINE */
 
 
 .winning-line{
@@ -594,24 +620,19 @@ transform:scale(1);
 position:absolute;
 
 
-
 height:8px;
-
 
 
 width:0;
 
 
-
 background:#00f5ff;
-
 
 
 border-radius:20px;
 
 
-
-z-index:50;
+z-index:20;
 
 
 
@@ -620,12 +641,11 @@ box-shadow:
 
 0 0 20px #00f5ff,
 
-0 0 60px #00f5ff;
+0 0 50px #00f5ff;
 
 
 
 transform-origin:left center;
-
 
 
 transition:
@@ -635,20 +655,10 @@ width .5s ease,
 transform .5s ease;
 
 
-
 pointer-events:none;
 
 
-
-/* IMPORTANT FIX */
-
-grid-column:1 / -1;
-
-grid-row:1 / -1;
-
-
 }
-
 
 
 
@@ -666,16 +676,18 @@ margin-top:35px;
 padding:15px 45px;
 
 
-
-font-size:20px;
-
-
-
 border:none;
 
 
 
 border-radius:50px;
+
+
+
+font-size:18px;
+
+
+font-weight:700;
 
 
 
@@ -693,7 +705,7 @@ linear-gradient(
 
 45deg,
 
-#008cff,
+#0066ff,
 
 #00f5ff
 
@@ -704,7 +716,7 @@ linear-gradient(
 box-shadow:
 
 
-0 0 30px #00f5ff;
+0 0 30px rgba(0,245,255,.8);
 
 
 
@@ -715,23 +727,22 @@ transition:.3s;
 
 
 
-
-
 button:hover{
 
 
-transform:scale(1.1);
+transform:
+
+scale(1.08);
 
 
 
 box-shadow:
 
 
-0 0 60px #00f5ff;
+0 0 50px #00f5ff;
 
 
 }
-
 
 
 
@@ -742,13 +753,11 @@ box-shadow:
 @media(max-width:600px){
 
 
-
 h1{
 
-font-size:40px;
+font-size:38px;
 
 }
-
 
 
 
@@ -764,22 +773,19 @@ repeat(3,80px);
 
 
 
-
 .cell{
-
-
-height:80px;
 
 
 width:80px;
 
+
+height:80px;
 
 
 font-size:45px;
 
 
 }
-
 
 
 }
