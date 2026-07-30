@@ -96,13 +96,30 @@ const winningConditions = [
 
 function playSound(sound){
 
-if(sound){
+    if(!sound){
+        return;
+    }
 
-sound.volume = 1;
 
-sound.play();
+    sound.pause();
 
-}
+    sound.currentTime = 0;
+
+    sound.volume = 1;
+
+
+    let promise = sound.play();
+
+
+    if(promise !== undefined){
+
+        promise.catch(error=>{
+
+            console.log("Sound error:", error);
+
+        });
+
+    }
 
 }
 
