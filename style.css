@@ -182,31 +182,31 @@ pop .3s;
 
 .winning-line{
 
-
 position:absolute;
-
 
 height:8px;
 
-
 background:#ff4757;
-
 
 border-radius:10px;
 
-
 width:0;
 
-
 z-index:5;
-
 
 box-shadow:
 0 0 20px red;
 
 
-transition:.5s;
+transform-origin:left center;
 
+
+transition:
+width .5s ease,
+transform .5s ease;
+
+
+pointer-events:none;
 
 }
 
