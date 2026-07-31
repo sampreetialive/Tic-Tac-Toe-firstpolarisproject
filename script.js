@@ -271,6 +271,8 @@ updateScore();
 showLine(win);
 
 
+highlightWinner(win);
+
 
 playSound(winSound);
 
@@ -322,6 +324,11 @@ statusText.textContent=
 
 
 statusText.className="draw";
+
+
+// DRAW BOARD EFFECT
+
+document.querySelector(".board").classList.add("draw-board");
 
 
 
@@ -380,6 +387,39 @@ statusText.textContent=
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// WINNING TILE EFFECT
+
+function highlightWinner(win){
+
+win.forEach(index=>{
+
+cells[index].classList.add("winner");
+
+});
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 function showLine(win){
@@ -607,12 +647,20 @@ cell.classList.remove(
 
 "x",
 
-"o"
+"o",
+
+"winner"
 
 );
 
 
 });
+
+
+
+// remove draw effect
+
+document.querySelector(".board").classList.remove("draw-board");
 
 
 
@@ -732,9 +780,9 @@ restartGame
 
 
 newGameButton.addEventListener(
+
 "click",
-()=>{
-    console.log("NEW GAME CLICKED");
-    newGame();
-}
+
+newGame
+
 );
