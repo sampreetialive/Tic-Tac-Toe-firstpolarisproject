@@ -732,9 +732,9 @@ restartGame
 
 
 newGameButton.addEventListener(
-
 "click",
-
-newGame
-
+()=>{
+    console.log("NEW GAME CLICKED");
+    newGame();
+}
 );
