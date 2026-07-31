@@ -29,7 +29,7 @@ Click New Game to start another round while keeping the scoreboard.
 -> ✨ Live Demo
 
 Play the game here:
-https://sampreetialive.github.io/Tic-Tac-Toe-polarisproject/
+https://sampreetialive.github.io/Tic-Tac-Toe-firstpolarisproject/
 
 -> ✨ What I Learned
 While building this project, I learned how to:
