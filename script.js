@@ -4,6 +4,8 @@ const statusText = document.getElementById("status");
 
 const restartButton = document.getElementById("restart");
 
+const newGameButton = document.getElementById("newGame");
+
 const winningLine = document.querySelector(".winning-line");
 
 
@@ -65,7 +67,6 @@ const drawScore = document.getElementById("draw-score");
 
 
 
-
 const winningConditions = [
 
 [0,1,2],
@@ -85,7 +86,6 @@ const winningConditions = [
 [2,4,6]
 
 ];
-
 
 
 
@@ -130,6 +130,8 @@ function playSound(sound){
 
 
 
+
+
 function handleCellClick(){
 
 
@@ -162,7 +164,6 @@ this.textContent=currentPlayer;
 
 
 
-
 this.classList.add(
 
 currentPlayer==="X"
@@ -190,7 +191,6 @@ checkWinner();
 
 
 }
-
 
 
 
@@ -238,6 +238,7 @@ break;
 
 
 }
+
 
 
 
@@ -310,7 +311,6 @@ return;
 
 
 
-
 if(!gameState.includes("")){
 
 
@@ -368,6 +368,7 @@ currentPlayer==="X"
 
 
 
+
 statusText.className="";
 
 
@@ -379,16 +380,6 @@ statusText.textContent=
 
 
 }
-
-
-
-
-
-
-
-
-
-
 
 
 function showLine(win){
@@ -451,6 +442,8 @@ boardRect.top;
 
 
 
+
+
 const x2=
 
 endRect.left+
@@ -474,6 +467,7 @@ boardRect.top;
 
 
 
+
 const distance = Math.sqrt(
 
 Math.pow(x2-x1,2)
@@ -483,6 +477,8 @@ Math.pow(x2-x1,2)
 Math.pow(y2-y1,2)
 
 );
+
+
 
 
 
@@ -531,7 +527,9 @@ winningLine.style.transform=
 `rotate(${angle}deg)`;
 
 
+
 }
+
 
 
 
@@ -562,6 +560,9 @@ drawScore.textContent=scores.draw;
 
 
 
+
+
+// RESTART ONLY CLEARS BOARD
 
 function restartGame(){
 
@@ -594,6 +595,8 @@ gameState=[
 
 
 
+
+
 cells.forEach(cell=>{
 
 
@@ -616,6 +619,7 @@ cell.classList.remove(
 
 
 
+
 statusText.className="";
 
 
@@ -629,7 +633,9 @@ statusText.textContent=
 
 
 
+
 winningLine.style.width="0px";
+
 
 winningLine.style.transform=
 
@@ -638,6 +644,49 @@ winningLine.style.transform=
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// NEW GAME CLEARS EVERYTHING
+
+function newGame(){
+
+
+
+restartGame();
+
+
+
+
+scores={
+
+X:0,
+
+O:0,
+
+draw:0
+
+};
+
+
+
+updateScore();
+
+
+
+}
+
+
+
 
 
 
@@ -668,10 +717,24 @@ handleCellClick
 
 
 
+
+
 restartButton.addEventListener(
 
 "click",
 
 restartGame
+
+);
+
+
+
+
+
+newGameButton.addEventListener(
+
+"click",
+
+newGame
 
 );
