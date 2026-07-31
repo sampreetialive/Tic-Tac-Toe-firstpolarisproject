@@ -805,7 +805,7 @@ text-shadow:
 
 }
 
-/* WINNING CELLS */
+/* WINNING TILE EFFECT */
 
 .cell.winner{
 
@@ -830,6 +830,9 @@ transform:scale(1.08);
 
 
 
+
+
+
 /* DRAW BOARD EFFECT */
 
 .board.draw-board{
@@ -845,6 +848,7 @@ box-shadow:
 
 
 
+
 .board.draw-board .cell{
 
 background:rgba(255,255,255,.55);
@@ -854,7 +858,5 @@ border-color:#d8cfae;
 color:#333;
 
 box-shadow:none;
-
-}
 
 }
