@@ -527,7 +527,7 @@ height:8px;
 
 width:0;
 
-background:#00f5ff;
+background:#39ff14;
 
 border-radius:20px;
 
@@ -536,9 +536,9 @@ z-index:20;
 
 box-shadow:
 
-0 0 20px #00f5ff,
+0 0 20px #39ff14,
 
-0 0 50px #00f5ff;
+0 0 50px #39ff14;
 
 
 transform-origin:left center;
