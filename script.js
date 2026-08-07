@@ -28,6 +28,7 @@ let gameActive = true;
 
 // GAME MODE
 
+let aiTimer;
 let gameMode = "manual";
 
 let aiPlayer = "O";
@@ -212,7 +213,7 @@ currentPlayer==="O"
 
 ){
 
-setTimeout(aiMove,600);
+aiTimer = setTimeout(aiMove,600);
 
 }
 
@@ -758,7 +759,7 @@ drawScore.textContent=scores.draw;
 
 function restartGame(){
 
-
+clearTimeout(aiTimer);
 
 currentPlayer="X";
 
