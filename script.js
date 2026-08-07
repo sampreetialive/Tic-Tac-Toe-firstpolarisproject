@@ -1010,10 +1010,17 @@ statusText.textContent=
 }
 
 );
+
 newGameButton.addEventListener(
 
 "click",
 
-newGame
+()=>{
+
+console.log("NEW GAME BUTTON WORKING");
+
+newGame();
+
+}
 
 );
