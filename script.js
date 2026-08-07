@@ -862,11 +862,20 @@ winningLine.style.transform=
 function newGame(){
 
 
+clearTimeout(aiTimer);
+
+
+// reset mode
+
+gameMode="manual";
+
+
+// reset board
 
 restartGame();
 
 
-
+// reset scores
 
 scores={
 
@@ -879,19 +888,19 @@ draw:0
 };
 
 
-
 updateScore();
 
 
+// reset message
+
+statusText.className="";
+
+statusText.textContent=
+
+"Player X's Turn";
+
 
 }
-
-
-
-
-
-
-
 
 
 
@@ -999,5 +1008,12 @@ statusText.textContent=
 
 
 }
+
+);
+newGameButton.addEventListener(
+
+"click",
+
+newGame
 
 );
