@@ -1011,6 +1011,7 @@ statusText.textContent=
 
 );
 
+console.log(newGameButton);
 newGameButton.addEventListener(
 
 "click",
