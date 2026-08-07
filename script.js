@@ -951,21 +951,21 @@ manualModeButton.addEventListener(
 
 ()=>{
 
-
 gameMode="manual";
 
-
 restartGame();
-
 
 statusText.textContent=
 
 "Manual Mode - Player X's Turn";
 
-
 }
 
 );
+
+}
+
+
 
 if(friendModeButton){
 
@@ -975,21 +975,21 @@ friendModeButton.addEventListener(
 
 ()=>{
 
-
 gameMode="friend";
 
-
 restartGame();
-
 
 statusText.textContent=
 
 "Friend Mode - Player X's Turn";
 
-
 }
 
 );
+
+}
+
+
 
 if(aiModeButton){
 
@@ -999,21 +999,21 @@ aiModeButton.addEventListener(
 
 ()=>{
 
-
 gameMode="ai";
 
-
 restartGame();
-
 
 statusText.textContent=
 
 "You vs AI - Your Turn";
 
-
 }
 
 );
+
+}
+
+
 
 if(newGameButton){
 
