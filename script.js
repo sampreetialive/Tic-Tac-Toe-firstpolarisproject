@@ -4,7 +4,11 @@ const statusText = document.getElementById("status");
 
 const restartButton = document.getElementById("restart");
 
-const newGameButton = document.getElementById("newGame");
+const manualModeButton = document.getElementById("manualMode");
+
+const aiModeButton = document.getElementById("aiMode");
+
+const friendModeButton = document.getElementById("friendMode");
 
 const winningLine = document.querySelector(".winning-line");
 
@@ -20,6 +24,13 @@ const drawSound = document.getElementById("drawSound");
 let currentPlayer = "X";
 
 let gameActive = true;
+
+
+// GAME MODE
+
+let gameMode = "manual";
+
+let aiPlayer = "O";
 
 
 
@@ -189,17 +200,24 @@ playSound(clickSound);
 checkWinner();
 
 
+// AI TURN
+
+if(
+
+gameMode==="ai" &&
+
+gameActive &&
+
+currentPlayer==="O"
+
+){
+
+setTimeout(aiMove,600);
 
 }
 
 
-
-
-
-
-
-
-
+}
 
 
 
@@ -572,7 +590,141 @@ winningLine.style.transform=
 
 
 
+// =================
+// AI SYSTEM
+// =================
 
+
+function aiMove(){
+
+
+if(!gameActive){
+
+return;
+
+}
+
+
+
+let move = findBestMove("O");
+
+
+// block player
+
+if(move===null){
+
+move=findBestMove("X");
+
+}
+
+
+// random if no strategy
+
+if(move===null){
+
+
+let available=[];
+
+
+gameState.forEach((cell,index)=>{
+
+
+if(cell===""){
+
+available.push(index);
+
+}
+
+
+});
+
+
+
+move=
+
+available[
+
+Math.floor(
+
+Math.random()*available.length
+
+)
+
+];
+
+
+}
+
+
+
+cells[move].click();
+
+
+}
+
+
+
+
+
+function findBestMove(player){
+
+
+
+for(let condition of winningConditions){
+
+
+
+let values=condition.map(
+
+index=>gameState[index]
+
+);
+
+
+
+let count=
+
+values.filter(
+
+value=>value===player
+
+).length;
+
+
+
+let empty=
+
+condition.find(
+
+index=>gameState[index]===""
+
+);
+
+
+
+if(
+
+count===2 &&
+
+empty!==undefined
+
+){
+
+
+return empty;
+
+
+}
+
+
+}
+
+
+
+return null;
+
+
+}
 
 
 
@@ -779,10 +931,72 @@ restartGame
 
 
 
-newGameButton.addEventListener(
+manualModeButton.addEventListener(
 
 "click",
 
-newGame
+()=>{
+
+
+gameMode="manual";
+
+
+restartGame();
+
+
+statusText.textContent=
+
+"Manual Mode - Player X's Turn";
+
+
+}
+
+);
+
+
+
+friendModeButton.addEventListener(
+
+"click",
+
+()=>{
+
+
+gameMode="friend";
+
+
+restartGame();
+
+
+statusText.textContent=
+
+"Friend Mode - Player X's Turn";
+
+
+}
+
+);
+
+
+
+aiModeButton.addEventListener(
+
+"click",
+
+()=>{
+
+
+gameMode="ai";
+
+
+restartGame();
+
+
+statusText.textContent=
+
+"You vs AI - Your Turn";
+
+
+}
 
 );
