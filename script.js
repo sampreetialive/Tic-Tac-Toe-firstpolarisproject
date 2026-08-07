@@ -4,6 +4,8 @@ const statusText = document.getElementById("status");
 
 const restartButton = document.getElementById("restart");
 
+const newGameButton = document.getElementById("newGame");
+
 const manualModeButton = document.getElementById("manualMode");
 
 const aiModeButton = document.getElementById("aiMode");
