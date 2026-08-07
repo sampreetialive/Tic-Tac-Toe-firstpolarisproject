@@ -943,6 +943,8 @@ restartGame
 
 
 
+if(manualModeButton){
+
 manualModeButton.addEventListener(
 
 "click",
@@ -965,7 +967,7 @@ statusText.textContent=
 
 );
 
-
+if(friendModeButton){
 
 friendModeButton.addEventListener(
 
@@ -989,7 +991,7 @@ statusText.textContent=
 
 );
 
-
+if(aiModeButton){
 
 aiModeButton.addEventListener(
 
@@ -1013,7 +1015,8 @@ statusText.textContent=
 
 );
 
-console.log(newGameButton);
+if(newGameButton){
+
 newGameButton.addEventListener(
 
 "click",
@@ -1027,3 +1030,5 @@ newGame();
 }
 
 );
+
+}
